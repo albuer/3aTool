@@ -11,13 +11,14 @@
 </head>
 
 <body>
-  <h1>3A参数配置</h1>
+  <h1>3A参数配置 v0.3</h1>
 
-  <div id="login_click">
-    <a id="select-file" href="#">从文件加载参数</a>
-    <br>
-    <br>
-    <a id="save-dialog" href="#">保存参数到文件</a>
+  <div id="mybtn">
+    <nobr>
+      <a id="select-file" href="#">加载参数</a>
+      <a id="save-file" href="#">保存参数</a>
+      <a id="save-dialog" href="#">另存参数</a>
+    </nobr>
   </div>
 
   <form action='' id='myform'>
@@ -27,7 +28,13 @@
   <script>
     require('./renderer.js');
     loadUI("main", "");
+
+    const saveFile = document.getElementById('save-file');
+    saveFile.addEventListener('click', (event) => {
+      SaveFile();
+    })
   </script>
+  <br><br>
 </body>
 
 </html>

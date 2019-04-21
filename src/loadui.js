@@ -1,5 +1,6 @@
 var fs = require("fs");
 var parameter;
+var loadFile;
 
 function doSaveFile(saveFile) {
     var form = document.getElementById('myform');
@@ -25,21 +26,28 @@ function doSaveFile(saveFile) {
     }
     fs.writeFileSync(saveFile, parameter);
     alert('保存参数成功:\n'+saveFile);
+    loadFile = saveFile;
+}
+
+function SaveFile() {
+    if (loadFile == undefined || loadFile==null || loadFile == "") {
+        alert('请先加载参数');
+        return;
+    }
+    doSaveFile(loadFile);
 }
 
 function loadUI(dname, filename) {
-    
     if ("undefined" != typeof filename && filename != null && filename != "") {
         parameter = fs.readFileSync(filename);
     }
-    alert('0');
-    var data = fs.readFileSync('src/ui.json', 'utf8');
-    alert('1');
+    var data = fs.readFileSync(__dirname+'/ui.json', 'utf8');
     var jsonData = JSON.parse(data);
-    // alert("DATA: " + JSON.stringify(jsonData));
     var div = document.getElementById(dname);
     div.innerHTML = "";
     AnalyJson(jsonData, div);
+
+    loadFile = filename;
 }
 
 //创建JSON解析函数
@@ -60,7 +68,6 @@ function AnalyJson(data, div) {
 
 //针对不同的解析情况，调用下边函数
 function CreateInputViewer(data, div) {
-    //alert(data.type);
     switch (data.type) {
         case 'text': {
             CreateInput(data, div);
@@ -87,6 +94,12 @@ function AddComponent(data, component, div) {
     label_var.innerHTML = data.title + ": ";
     ul.appendChild(label_var);
     ul.appendChild(component);
+    if (data.range != null) {
+        var note_label = document.createElement("label");
+        note_label.className = 'note';
+        note_label.innerHTML = "(" + data.range[0] + " - " + data.range[1] + ")";
+        ul.appendChild(note_label);
+    }
     div.appendChild(ul);
 }
 
@@ -100,7 +113,6 @@ function CreateInput(data, div) {
             value = ((~(value - 1)) & 0x7FFF) * (-1);
         }
         if (data.unit > 0) {
-            //alert("value: "+value+", unit: "+data.unit);
             value = value / data.unit;
             value = value.toFixed(1);
             input.unit = data.unit;

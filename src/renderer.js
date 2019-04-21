@@ -17,7 +17,11 @@ ipcRenderer.on('selectedItem', function (event, path) {
 const saveBtn = document.getElementById('save-dialog')
 
 saveBtn.addEventListener('click', (event) => {
-    ipcRenderer.send('save-dialog')
+    if (loadFile == undefined || loadFile==null || loadFile == "") {
+        alert('请先加载参数');
+        return;
+    }
+    ipcRenderer.send('save-dialog', loadFile);
 })
 
 ipcRenderer.on('saved-file', (event, path) => {

@@ -20,29 +20,24 @@ input {
     width: 100px;
 }
 
-button1 {
-    font-family: sans-serif;
-    font-weight: bold;
-    padding: .5rem;
-    background-color: #ccc;
-    box-shadow: 2px 2px 2px #ccc;
-    margin: 1em;
-}
-
 label {
     display: inline-block;
     width: 220px;
 }
 
-#login_click{
-    margin-top:12px;
-    height:30px;
-    right: 0px;
-    top: 0px;
+label.note {
+    margin-left:10px;
+    color: #2f435e;
+}
+
+#mybtn{
+    margin-top:10px;
+    right: 8px;
+    bottom: 12px;
     position: fixed;
 }
 
-#login_click a
+#mybtn a
 {
     text-decoration:none;
     background:#2f435e;
@@ -57,4 +52,4 @@ label {
     -moz-transition:all linear 0.30s;
     transition:all linear 0.30s;
 }  
-#login_click a:hover { background:#385f9e; }  
+#mybtn a:hover { background:#385f9e; }

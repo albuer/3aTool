@@ -71,14 +71,16 @@ ipcMain.on('open-file-dialog', function (event) {
   })
 })
 
-ipcMain.on('save-dialog', (event) => {
+ipcMain.on('save-dialog', (event,args) => {
   const options = {
     title: '保存参数文件',
+    defaultPath: args,
     filters: [
       { name: '3A Parameter File', extensions: ['bin'] },
       { name: 'All Files', extensions: ['*'] }
     ]
   }
+
   dialog.showSaveDialog(options, (filename) => {
     event.sender.send('saved-file', filename)
   })
