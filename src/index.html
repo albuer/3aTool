@@ -1,10 +1,33 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-  </head>
-  <body>
-    Well hey there!!!
-  </body>
+
+<head> 
+  <meta charset="utf-8"> 
+  <script src="loadui.js"></script>
+  <link type="text/css" rel="stylesheet" href="index.css">
+  </link>
+
+  <title>3A参数配置工具</title>
+</head>
+
+<body>
+  <h1>3A参数配置</h1>
+
+  <div id="login_click">
+    <a id="select-file" href="#">从文件加载参数</a>
+    <br>
+    <br>
+    <a id="save-dialog" href="#">保存参数到文件</a>
+  </div>
+
+  <form action='' id='myform'>
+    <div id="main"></div>
+  </form>
+
+  <script>
+    require('./renderer.js');
+    loadUI("main", "");
+  </script>
+</body>
+
 </html>

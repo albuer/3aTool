@@ -19,9 +19,6 @@ const createWindow = () => {
   // and load the index.html of the app.
   mainWindow.loadURL(`file://${__dirname}/index.html`);
 
-  // Open the DevTools.
-  mainWindow.webContents.openDevTools();
-
   // Emitted when the window is closed.
   mainWindow.on('closed', () => {
     // Dereference the window object, usually you would store windows
@@ -55,3 +52,34 @@ app.on('activate', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
+const { ipcMain, dialog } = require('electron')
+
+ipcMain.on('open-file-dialog', function (event) {
+  let startPath = ''
+  if (process.platform === 'darwin') {
+    startPath = '/Users/<username>/Documents/'
+  }
+  dialog.showOpenDialog({
+    properties: ['openFile'],
+    defaultPath: startPath,
+    filters: [
+      { name: '3A Parameter File', extensions: ['bin'] },
+      { name: 'All Files', extensions: ['*'] }
+    ]
+  }, function (files) {
+    if (files) event.sender.send('selectedItem', files)
+  })
+})
+
+ipcMain.on('save-dialog', (event) => {
+  const options = {
+    title: '保存参数文件',
+    filters: [
+      { name: '3A Parameter File', extensions: ['bin'] },
+      { name: 'All Files', extensions: ['*'] }
+    ]
+  }
+  dialog.showSaveDialog(options, (filename) => {
+    event.sender.send('saved-file', filename)
+  })
+})
